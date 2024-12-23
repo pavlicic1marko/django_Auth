@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login ,logout
 from django.contrib import messages
@@ -26,5 +27,21 @@ def login_user(request):
         return render(request, 'authenticate/login.html',{})
 
 
-def register_user(reqeuest):
-    return render(reqeuest, 'authenticate/register.html', {})
+def register_user(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            messages.success(request, ('You Have Registered...'))
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+
+    context = {'form':form}
+    return render(reqeuest, 'authenticate/register.html', {context})
