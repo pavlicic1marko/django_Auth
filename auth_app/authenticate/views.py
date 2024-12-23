@@ -26,3 +26,5 @@ def login_user(request):
         return render(request, 'authenticate/login.html',{})
 
 
+def register_user(reqeuest):
+    return render(reqeuest, 'authenticate/register.html', {})
