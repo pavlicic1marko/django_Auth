@@ -44,4 +44,4 @@ def register_user(request):
         form = UserCreationForm()
 
     context = {'form':form}
-    return render(reqeuest, 'authenticate/register.html', {context})
+    return render(request, 'authenticate/register.html', context)
